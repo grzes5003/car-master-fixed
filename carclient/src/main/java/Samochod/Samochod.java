@@ -5,6 +5,10 @@ package Samochod;
 
 import static java.lang.Math.pow;
 import Pozycja.Pozycja;
+import com.sun.org.apache.xpath.internal.operations.Bool;
+import config.ConfigLoader;
+
+import java.util.Properties;
 
 public class Samochod extends Thread{
 
@@ -37,15 +41,24 @@ public class Samochod extends Thread{
     }
 
     public Samochod(int res){
-        this.res = res;
-        this.pozycja = new Pozycja(0,0);
-        this.stanWlaczenia = false;
-        this.nrRejest = "1234567890";
-        this.model = "szybki";
-        this.predkoscMax = 100;
-        this.silnik = new Silnik("tak",100,1,100,0);
-        this.skrzyniaBiegow = new SkrzyniaBiegow("tak2",101,2,1,6,1,new Sprzeglo("tak3",102,3));
-        this.cel = new Pozycja(0,0);
+
+        ConfigLoader cfg = new ConfigLoader();
+
+        try {
+            Properties prop = cfg.getPropValues();
+
+            this.res = Integer.parseInt(prop.getProperty("res"));
+            this.pozycja = new Pozycja(0,0);
+            this.stanWlaczenia = Boolean.parseBoolean(prop.getProperty("car.stanWlaczenia"));
+            this.nrRejest = prop.getProperty("car.nrRejest");
+            this.model = prop.getProperty("car.model");
+            this.predkoscMax = Integer.parseInt(prop.getProperty("car.predkoscMax"));
+            this.silnik = new Silnik("tak",100,1,100,0);
+            this.skrzyniaBiegow = new SkrzyniaBiegow("tak2",101,2,1,6,1,new Sprzeglo("tak3",102,3));
+            this.cel = new Pozycja(0,0);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     // minor methods
@@ -188,5 +201,13 @@ public class Samochod extends Thread{
     @Override
     public String toString() {
         return model + ", ID: " + nrRejest + ", stan: " + stanWlaczenia;
+    }
+
+    public void zmniejszBieg() {
+        this.skrzyniaBiegow.zmniejszBieg();
+    }
+
+    public void zwiekszBieg() {
+        this.skrzyniaBiegow.zwiekszBieg();
     }
 }

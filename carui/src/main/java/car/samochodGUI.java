@@ -29,6 +29,7 @@ public class samochodGUI {
     private JTextField poz1Field;
     private JTextField poz2Field;
     private JButton jedzButton;
+    private JLabel carRepresentation;
 
     private JFrame frame;
     private Vector<Samochod> sam_tab;
@@ -117,6 +118,31 @@ public class samochodGUI {
                 b_rejestracyjnyField = false;
             }
         });
+        mniejSzybkoButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                sam_tab.get(list1Index).zmniejszBieg();
+            }
+        });
+        szybciejButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                sam_tab.get(list1Index).zwiekszBieg();
+            }
+        });
+        mapJPanel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                Pozycja cel = new Pozycja(e.getX()*100, e.getY()*100);
+                if (list1Index >= 0){
+                    sam_tab.get(list1Index).jedzDo(cel);
+
+                }
+            }
+        });
     }
 
     private Timer timer = new Timer(100, new ActionListener() {
@@ -133,6 +159,8 @@ public class samochodGUI {
             predkoscField.setText("");
             pozycjaField.setText("");
             jedzButton.setText("");
+
+            carRepresentation.setVisible(false);
         }
         else{
             if(!b_rejestracyjnyField){ rejestracyjnyField.setText(sam_tab.get(list1Index).getNrRejest());}
@@ -143,6 +171,9 @@ public class samochodGUI {
             if(sam_tab.get(list1Index).getStanWlaczenia()){ jedzButton.setText("Zatrzymaj");}
             else{ jedzButton.setText("Jedź do"); }
 
+            carRepresentation.setVisible(true);
+            carRepresentation.setLocation((int) sam_tab.get(list1Index).getAktPozycja().x, (int) sam_tab.get(list1Index).getAktPozycja().y);
+            System.out.println(sam_tab.get(list1Index).getAktPozycja().x);
         }
         System.out.println(list1Index);
         list1.setListData(sam_tab);
