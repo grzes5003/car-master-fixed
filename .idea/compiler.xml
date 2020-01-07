@@ -10,9 +10,9 @@
         <module name="carui" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="carclient" target="1.5" />
-      <module name="carui" target="1.5" />
+    <bytecodeTargetLevel target="10">
+      <module name="carclient" target="10" />
+      <module name="carui" target="10" />
     </bytecodeTargetLevel>
   </component>
 </project>

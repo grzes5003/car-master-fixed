@@ -5,7 +5,7 @@ package Samochod;
 
 import static java.lang.Math.pow;
 import Pozycja.Pozycja;
-import com.sun.org.apache.xpath.internal.operations.Bool;
+//import com.sun.org.apache.xpath.internal.operations.Bool;
 import config.ConfigLoader;
 
 import java.util.Properties;
