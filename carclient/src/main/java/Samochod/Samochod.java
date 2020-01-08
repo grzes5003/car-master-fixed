@@ -24,6 +24,8 @@ public class Samochod extends Thread{
 
     Pozycja cel;
 
+    private boolean ifRazWlaczyny = false;
+
     // constructiors
 
     public Samochod(int res, Pozycja pozycja, boolean stanWlaczenia, String nrRejest, String model, int predkoscMax, Silnik silnik, SkrzyniaBiegow skrzyniaBiegow, Pozycja cel) {
@@ -120,7 +122,10 @@ public class Samochod extends Thread{
     @Override
     public synchronized void start() {
         this.wlacz();
-        super.start();
+        if (!ifRazWlaczyny) {
+            ifRazWlaczyny = true;
+            super.start();
+        }
     }
 
     public void jedzDo(Pozycja cel){
@@ -131,6 +136,10 @@ public class Samochod extends Thread{
         // get pos
         // if cel != pos
         // change pos
+        if(this.pozycja == cel){
+            this.setPozycja(new Pozycja(0,0));
+        }
+
         this.cel = cel;
         this.start();
     }
@@ -183,12 +192,14 @@ public class Samochod extends Thread{
             this.wylacz();
             // TODO stop thread
         }
-        // what if driving not from left to upper right?
-        double alpha = Math.atan( (cel.y - pozycja.y)/(cel.x - pozycja.x) ); // possible mistake
+        else {
+            // what if driving not from left to upper right?
+            double alpha = Math.atan((cel.y - pozycja.y) / (cel.x - pozycja.x)); // possible mistake
 
-        // change position
-        this.pozycja.x += time*this.getAktPredkosc()*Math.sin(alpha);
-        this.pozycja.y += time*this.getAktPredkosc()*Math.cos(alpha);
+            // change position
+            this.pozycja.x += time * this.getAktPredkosc() * Math.sin(alpha);
+            this.pozycja.y += time * this.getAktPredkosc() * Math.cos(alpha);
+        }
     }
 
     public Thread.State getState(){

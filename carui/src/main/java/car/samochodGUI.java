@@ -136,7 +136,7 @@ public class samochodGUI {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
-                Pozycja cel = new Pozycja(e.getX()*10, e.getY()*10);
+                Pozycja cel = new Pozycja(e.getX()*1, e.getY()*1);
                 if (list1Index >= 0){
                     sam_tab.get(list1Index).jedzDo(cel);
 
