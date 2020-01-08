@@ -210,4 +210,8 @@ public class Samochod extends Thread{
     public void zwiekszBieg() {
         this.skrzyniaBiegow.zwiekszBieg();
     }
+
+    public void setPozycja(Pozycja pozycja) {
+        this.pozycja = pozycja;
+    }
 }

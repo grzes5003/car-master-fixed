@@ -19,7 +19,7 @@ public class samochodGUI {
     private JButton addButton;
     private JButton deleteButton;
     private JList list1;
-    private JButton editSamochodButton;
+    private JButton resetPosButton;
     private JButton szybciejButton;
     private JButton mniejSzybkoButton;
     private JTextField nazwaField;
@@ -136,10 +136,19 @@ public class samochodGUI {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
-                Pozycja cel = new Pozycja(e.getX()*100, e.getY()*100);
+                Pozycja cel = new Pozycja(e.getX()*10, e.getY()*10);
                 if (list1Index >= 0){
                     sam_tab.get(list1Index).jedzDo(cel);
 
+                }
+            }
+        });
+        resetPosButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                if (list1Index >= 0){
+                    sam_tab.get(list1Index).setPozycja(new Pozycja(0,0));
                 }
             }
         });
